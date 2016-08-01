@@ -72,7 +72,7 @@ class App extends Component
     routeMap(route, navigator)
     {
 		if (route.name == 'startPage') {
-            return <CategoryPage {...route.params} navigator={navigator} />
+            return <CategoryPage {...route.params} {...this.props} navigator={navigator} />
         }
 
 		/*

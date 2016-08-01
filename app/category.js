@@ -13,20 +13,46 @@ import {
   	View
 } from 'react-native';
 
+import { connect } from 'react-redux'
+import * as Actions from './redux/actions'
 
 import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class Category extends Component
+class Category extends Component
 {
+
+	constructor (props) {
+    	super(props);
+  	}
+
+	// 获取分类数据
+	getCategary()
+	{
+		//dispatch(getCategoryList());
+	}
+
+	componentDidMount()
+    {
+		// 获取分类数据
+		this.props.dispatch( Actions.getCategoryList() );
+    }
+
+	// 已加载组件收到新的参数时调用
+	componentWillReceiveProps (nextProps)
+	{
+		console.log(nextProps.category);
+		this.categoryData = nextProps.category;
+	}
+
 	render ()
 	{
 		return (
 			<View style={styles.container}>
 				<View style={styles.topnav}>
-					<Icon name="arrow-left" size={24} color="#fff" onPress={() => this.navigator.pop()} style={styles.navleft} />
+					<TouchableOpacity style={styles.navleft} onPress={() => this.navigator.pop()} ><Icon name="arrow-left" size={24} color="#fff" /></TouchableOpacity>
 					<Text style={styles.navtit}>栏目</Text>
-					<Icon name="search" size={24} color="#fff" style={styles.navright} onPress={() => this.navigator.push({name:'commentPage',params:{postId:this.props.id} })} />
+					<TouchableOpacity style={styles.navright} onPress={() => this.navigator.push({name:'commentPage',params:{postId:this.props.id} })}><Icon name="search" size={24} color="#fff" /></TouchableOpacity>
 				</View>
 				<ScrollableTabView
 					tabBarBackgroundColor="#fff"
@@ -35,14 +61,16 @@ export default class Category extends Component
 					tabBarInactiveTextColor="#888"
 					renderTabBar={() => <ScrollableTabBar />} >
 
-			        <View tabLabel="React" style={{flex: 1}}><Text>React</Text></View>
-					<View tabLabel="Flow" style={{flex: 1}}><Text>Flow</Text></View>
-					<View tabLabel="Jest" style={{flex: 1}}><Text>Jest</Text></View>
-					<View tabLabel="Jest" style={{flex: 1}}><Text>Jest</Text></View>
-					<View tabLabel="Jest" style={{flex: 1}}><Text>Jest</Text></View>
-					<View tabLabel="React" style={{flex: 1}}><Text>React</Text></View>
-					<View tabLabel="Flow" style={{flex: 1}}><Text>Flow</Text></View>
-					<View tabLabel="Jest" style={{flex: 1}}><Text>Jest</Text></View>
+					{
+						/*
+						this.categoryData.map((itme) => {
+							return (
+								<View tabLabel="React" style={{flex: 1}}><Text>React</Text></View>
+							);
+						})
+						*/
+					}
+
 			    </ScrollableTabView>
 	        </View>
 		);
@@ -62,15 +90,21 @@ let styles = StyleSheet.create({
   	},
 	navleft: {
       position: 'absolute',
-      left:15,
-      top: 12,
-	  padding: 5,
+	  left: 0,
+	  top: 0,
+	  paddingLeft:15,
+	  paddingTop:12,
+	  paddingBottom:12,
+	  paddingRight:15,
   },
   navright: {
       position: 'absolute',
-      right:15,
-      top: 12,
-	  padding: 5,
+      right:0,
+      top: 0,
+	  paddingLeft:15,
+	  paddingTop:12,
+	  paddingBottom:12,
+	  paddingRight:15,
   },
   navtit: {
       flex:1,
@@ -80,3 +114,14 @@ let styles = StyleSheet.create({
       marginTop:10,
   },
 });
+
+
+// 绑定redux数据到this.props
+function select(store)
+{
+	return {
+		category: store.category,
+	}
+}
+
+export default connect(select)(Category);
