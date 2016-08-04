@@ -45,9 +45,25 @@ function category(state = {}, action)
 }
 
 
+// 获取文章详细内容
+function article(state = {}, action)
+{
+	switch (action.type) {
+        case TYPES.ARTICLE_CONTENT_DOING:
+            return {data:[], loading: true};
+        case TYPES.ARTICLE_CONTENT_OK:
+            return {loading: false, loaded: true, data: action.data};
+        case TYPES.ARTICLE_CONTENT_ERROR:
+            return {data:[], loading: false, loaded: true,};
+        default:
+            return state;
+    }
+}
+
 const rootReducer = combineReducers({
     articleList,
 	category,
+	article,
 });
 
 export default rootReducer;

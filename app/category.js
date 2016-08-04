@@ -3,18 +3,18 @@
 import React, { Component } from 'react';
 import {
   	StyleSheet,
-  	ListView,
-  	RefreshControl,
   	ScrollView,
   	Text,
   	TouchableOpacity,
-  	PropTypes,
-  	Image,
   	View
 } from 'react-native';
 
 import { connect } from 'react-redux'
 import * as Actions from './redux/actions'
+import * as CONFIGS from './configs/configs';
+
+import Loading from './loading'
+import ArticleList from './articleList'
 
 import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -26,27 +26,28 @@ class Category extends Component
     	super(props);
   	}
 
-	// 获取分类数据
-	getCategary()
-	{
-		//dispatch(getCategoryList());
-	}
-
 	componentDidMount()
     {
 		// 获取分类数据
-		this.props.dispatch( Actions.getCategoryList() );
+		this.props.dispatch( Actions.getCategory() );
     }
 
 	// 已加载组件收到新的参数时调用
 	componentWillReceiveProps (nextProps)
 	{
-		console.log(nextProps.category);
+		//console.log(nextProps.category);
 		this.categoryData = nextProps.category;
 	}
 
 	render ()
 	{
+		// 如果分类数据没有加载完
+		if (typeof(this.categoryData) == 'undefined' || this.categoryData.loaded != true) {
+			return (
+				<Loading />
+			)
+		}
+
 		return (
 			<View style={styles.container}>
 				<View style={styles.topnav}>
@@ -60,15 +61,12 @@ class Category extends Component
 					tabBarActiveTextColor="#C4AD7D"
 					tabBarInactiveTextColor="#888"
 					renderTabBar={() => <ScrollableTabBar />} >
-
 					{
-						/*
-						this.categoryData.map((itme) => {
+						this.categoryData.data.map((itme) => {
 							return (
-								<View tabLabel="React" style={{flex: 1}}><Text>React</Text></View>
+								<ArticleList tabLabel={itme.title} key={itme.id} id={itme.id} navigator={this.props.navigator} />
 							);
 						})
-						*/
 					}
 
 			    </ScrollableTabView>

@@ -17,6 +17,7 @@ import {
 import configureStore from './redux/store'
 
 import CategoryPage from "./category";
+import ArticlePage from "./article";
 
 const store = configureStore();
 
@@ -73,6 +74,14 @@ class App extends Component
     {
 		if (route.name == 'startPage') {
             return <CategoryPage {...route.params} {...this.props} navigator={navigator} />
+        }
+
+		if (route.name == 'categoryPage') {
+            return <CategoryPage {...route.params} {...this.props} navigator={navigator} />
+        }
+
+		if (route.name == 'articlePage') {
+            return <ArticlePage {...route.params} {...this.props} navigator={navigator} />
         }
 
 		/*
