@@ -14,4 +14,4 @@ export const CATEGORY_LIST_API = 'http://112.124.18.75/api/get_category_index/';
 export const  CATEGORY_CONTENT_API = 'http://112.124.18.75/api/get_category_posts/?exclude=content,excerpt,comments,attachments&id=';
 
 // 文章内容地址
-export const  ARTICLE_CONTENT_API = 'http://112.124.18.75/api/get_post/?exclude=excerpt,comments,attachments&id=';
+export const  ARTICLE_CONTENT_API = 'http://112.124.18.75/my-post.php?id=';

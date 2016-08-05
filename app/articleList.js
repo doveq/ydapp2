@@ -53,7 +53,7 @@ class ArticleList extends Component
     onPostButton(id)
     {
         this.props.navigator.push({
-            name: 'archivesPage',
+            name: 'articlePage',
             params: {id: id},
         });
     }

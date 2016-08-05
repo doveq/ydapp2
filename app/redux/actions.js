@@ -83,11 +83,11 @@ export function getArticle(id)
           	.then((response) => response.json())
           	.then((data) => {
 				//console.log(data);
-              	dispatch({'type': TYPES.CATEGORY_CONTENT_OK, 'data': data.post});
+              	dispatch({'type': TYPES.ARTICLE_CONTENT_OK, 'data': data.post});
           })
           .catch((error) => {
               	Alert.alert('', error.message);
-				dispatch({'type': TYPES.CATEGORY_CONTENT_ERROR});
+				dispatch({'type': TYPES.ARTICLE_CONTENT_ERROR});
           });
   	}
 }
