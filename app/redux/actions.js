@@ -91,3 +91,32 @@ export function getArticle(id)
           });
   	}
 }
+
+
+/**
+	获取文章评论
+*/
+export function getComments(id, page = 1)
+{
+	return (dispatch, getState) => {
+		dispatch({'type': TYPES.COMMENTS_LIST_DOING});
+
+		let furl = CONFIGS.COMMENTS_LIST_API + id + '&page=' + page;
+    	fetch(furl)
+          	.then((response) => response.json())
+          	.then((data) => {
+				console.log(data);
+
+				let isMore = false;
+				if (data.headers['X-WP-TotalPages'] > page) {
+                    isMore = false;
+                }
+
+              	dispatch({'type': TYPES.COMMENTS_LIST_OK, 'data': data.body, 'isMore': isMore});
+          })
+          .catch((error) => {
+              	Alert.alert('', error.message);
+				dispatch({'type': TYPES.COMMENTS_LIST_ERROR});
+          });
+  	}
+}

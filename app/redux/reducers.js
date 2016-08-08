@@ -60,10 +60,25 @@ function article(state = {}, action)
     }
 }
 
+// 评论列表处理
+function comments(state = {}, action)
+{
+    switch (action.type) {
+        case TYPES.COMMENTS_LIST_DOING:
+            return {loading: true};
+        case TYPES.COMMENTS_LIST_OK:
+            return {loading: false, loaded: true, data: action.data, isMore: action.isMore};
+        case TYPES.COMMENTS_LIST_ERROR:
+            return {loading: false, loaded: true,};
+        default:
+            return state;
+    }
+}
+
 const rootReducer = combineReducers({
     articleList,
 	category,
-	article,
+	comments,
 });
 
 export default rootReducer;

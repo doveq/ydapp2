@@ -20,6 +20,7 @@ import * as CONFIGS from './configs/configs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Loading from './loading'
+import Comments from './comments'
 
 var DEVICE_WIDTH = Dimensions.get('window').width;
 
@@ -31,7 +32,7 @@ class Article extends Component
 
 	componentDidMount()
     {
-		//this.props.dispatch( Actions.getArticle(this.props.id) );
+
     }
 
 	// 已加载组件收到新的参数时调用
@@ -43,32 +44,6 @@ class Article extends Component
 
 	render ()
 	{
-		// 如果分类数据没有加载完
-		// if (typeof(this.articleData) == 'undefined' || this.articleData.loaded != true) {
-		// 	return (
-		// 		<Loading />
-		// 	)
-		// }
-
-		/*
-		let data = this.articleData.data;
-        let topimg = '';
-        if (data.thumbnail_images != null)
-            topimg = '<img src="' + data.thumbnail_images.full.url + '" style="max-width:100%;">';
-
-        let html = '<!DOCTYPE html><html><head>'
-                    +'<style>html,body{padding:0,margin:0} p{font-size:2.5em;}</style>'
-                    +'</head><body>'
-                    + topimg
-                    + '<div style="padding:20px 0;font-weight:bold;font-size:4em;">'+ data.title +'</div>'
-                    + data.content
-                    + '</body></html>';
-
-        // 正则替换图片，解决图片超出显示的问题
-        html = html.replace(/<\s*img\s+[^>]*?src\s*=\s*(\'|\")(.*?)\1[^>]*?\/?\s*>/g, '<img src="$2" style="width:100%;">');
-		html = "hellow~!";
-		*/
-
 		let url = CONFIGS.ARTICLE_CONTENT_API + this.props.id;
 
 		return (
@@ -89,6 +64,8 @@ class Article extends Component
                   scalesPageToFit={true}
 				  startInLoadingState={true}
                 />
+
+				<Comments id={this.props.id} />
 			</View>
     	);
 
