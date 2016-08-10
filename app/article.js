@@ -11,6 +11,7 @@ import {
 	RefreshControl,
 	Image,
 	WebView,
+	TextInput,
 } from 'react-native';
 
 import { connect } from 'react-redux'
@@ -28,6 +29,11 @@ class Article extends Component
 {
 	constructor (props) {
     	super(props);
+
+		this.state = {
+	      	inputHeight: 0,
+			inputText: '',
+	    };
   	}
 
 	componentDidMount()
@@ -61,11 +67,28 @@ class Article extends Component
                   javaScriptEnabled={true}
                   domStorageEnabled={true}
                   decelerationRate="normal"
-                  scalesPageToFit={true}
+                  scalesPageToFit={false}
 				  startInLoadingState={true}
                 />
 
-				<Comments id={this.props.id} />
+				<View style={{flexDirection: 'row', paddingLeft:10, paddingTop:10, paddingRight:10, paddingBottom:10,}}>
+					<View style={{ borderColor: '#dfdfdf', borderWidth: 1, flex:4}}>
+					   <TextInput style={{backgroundColor: '#f7f7f7', height: Math.max(35, this.state.inputText)}}
+					   		multiline={true}
+							onChange={(event) => {
+								this.setState({
+						            inputText: event.nativeEvent.text,
+						            inputHeight: event.nativeEvent.contentSize.height,
+						         });
+							 }}
+					   		value={this.state.inputText} />
+					</View>
+
+					<TouchableOpacity onPress={() => this.navigator.pop()} >
+						<Text style={{backgroundColor:'blue', height: Math.max(35, this.state.inputText), flex:2}}>发表</Text>
+					</TouchableOpacity>
+				</View>
+
 			</View>
     	);
 
