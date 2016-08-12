@@ -72,7 +72,7 @@ class Article extends Component
                 />
 
 				<View style={{flexDirection: 'row', paddingLeft:10, paddingTop:10, paddingRight:10, paddingBottom:10,}}>
-					<View style={{ borderColor: '#dfdfdf', borderWidth: 1, flex:4}}>
+					<View style={{ borderColor: '#dfdfdf', borderWidth: 1,flex:1,}}>
 					   <TextInput style={{backgroundColor: '#f7f7f7', height: Math.max(35, this.state.inputText)}}
 					   		multiline={true}
 							onChange={(event) => {
@@ -85,7 +85,7 @@ class Article extends Component
 					</View>
 
 					<TouchableOpacity onPress={() => this.navigator.pop()} >
-						<Text style={{backgroundColor:'blue', height: Math.max(35, this.state.inputText), flex:2}}>发表</Text>
+						<Text style={{backgroundColor:'blue', width:50, height: Math.max(35, this.state.inputText),}}>发表</Text>
 					</TouchableOpacity>
 				</View>
 
