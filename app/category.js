@@ -64,7 +64,7 @@ class Category extends Component
 					{
 						this.categoryData.data.map((itme) => {
 							return (
-								<ArticleList tabLabel={itme.title} key={itme.id} id={itme.id} navigator={this.props.navigator} />
+								<ArticleList tabLabel={itme.title} key={itme.id} url={CONFIGS.CATEGORY_CONTENT_API + itme.id} navigator={this.props.navigator} />
 							);
 						})
 					}

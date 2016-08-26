@@ -18,3 +18,6 @@ export const  ARTICLE_CONTENT_API = 'http://112.124.18.75/my-post.php?id=';
 
 // 文章评论api地址
 export const  COMMENTS_LIST_API = 'http://112.124.18.75/wp-json/wp/v2/comments?_envelope=1&order=desc&post=';
+
+// 首页所有文章列表api地址
+export const  HOME_LIST_API = 'http://112.124.18.75/api/get_recent_posts/?exclude=content,excerpt,comments,attachments';

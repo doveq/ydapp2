@@ -44,9 +44,9 @@ class Article extends Component
 	// 已加载组件收到新的参数时调用
 	componentWillReceiveProps (nextProps)
 	{
-		console.log(nextProps.article);
 		this.articleData = nextProps.article;
 	}
+
 
 	render ()
 	{
@@ -55,9 +55,9 @@ class Article extends Component
 		return (
 			<View style={styles.container}>
 				<View style={styles.topnav}>
-					<TouchableOpacity style={styles.navleft} onPress={() => this.navigator.pop()} ><Icon name="arrow-left" size={24} color="#fff" /></TouchableOpacity>
+					<TouchableOpacity style={styles.navleft} onPress={() => this.props.navigator.pop()} ><Icon name="arrow-left" size={24} color="#fff" /></TouchableOpacity>
 					<Text style={styles.navtit}></Text>
-					<TouchableOpacity style={styles.navright} onPress={() => this.navigator.push({name:'commentPage',params:{postId:this.props.id} })}><Icon name="search" size={24} color="#fff" /></TouchableOpacity>
+					<TouchableOpacity style={styles.navright} onPress={() => this.props.navigator.push({name:'commentPage',params:{postId:this.props.id} })}><Icon name="search" size={24} color="#fff" /></TouchableOpacity>
 				</View>
 
 				<WebView
@@ -71,9 +71,9 @@ class Article extends Component
 				  startInLoadingState={true}
                 />
 
-				<View style={{flexDirection: 'row', paddingLeft:10, paddingTop:10, paddingRight:10, paddingBottom:10,}}>
+				<View style={{flexDirection: 'row', paddingLeft:10, paddingTop:15, paddingRight:10, paddingBottom:15,borderColor: '#dfdfdf', borderTopWidth: 1,}}>
 					<View style={{ borderColor: '#dfdfdf', borderWidth: 1,flex:1,}}>
-					   <TextInput style={{backgroundColor: '#f7f7f7', height: Math.max(35, this.state.inputText)}}
+					   <TextInput style={{backgroundColor: '#f7f7f7', height:38,}}
 					   		multiline={true}
 							onChange={(event) => {
 								this.setState({
@@ -81,11 +81,13 @@ class Article extends Component
 						            inputHeight: event.nativeEvent.contentSize.height,
 						         });
 							 }}
-					   		value={this.state.inputText} />
+					   		value={this.state.inputText}
+							placeholder="伟大的言论从你开始..."
+						/>
 					</View>
 
 					<TouchableOpacity onPress={() => this.navigator.pop()} >
-						<Text style={{backgroundColor:'blue', width:50, height: Math.max(35, this.state.inputText),}}>发表</Text>
+						<Text style={{backgroundColor:'#dfdfdf',width:50, height:40,paddingTop:10,marginLeft:10,textAlign:'center',}}>发表</Text>
 					</TouchableOpacity>
 				</View>
 

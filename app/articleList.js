@@ -32,8 +32,15 @@ class ArticleList extends Component
 	    };
 
 		this.articleListData = [];
-		this.url = CONFIGS.CATEGORY_CONTENT_API + this.props.id;
+		//this.url = CONFIGS.CATEGORY_CONTENT_API + this.props.id;
+		this.url = this.props.url;
 		this.page = 1;
+
+		// 是否显示分类标签
+		if (typeof(this.props.isShowCaty) != 'undefined' && this.props.isShowCaty == true)
+			this.isShowCaty = true;
+		else
+			this.isShowCaty = false;
   	}
 
 	componentDidMount()
@@ -63,6 +70,12 @@ class ArticleList extends Component
 	{
 		// 如果设置了特殊图片,则按图片显示
         if (data.thumbnail_images != null) {
+
+			let tag = '';
+			if (this.isShowCaty && typeof(data.categories[0]) != 'undefined') {
+				tag = <View style={styles.imgItemTag} ><Text style={styles.imgTagTxt} >{data.categories[0].title}</Text></View>
+			}
+
             return (
 				<TouchableOpacity onPress={() => this.onPostButton(data.id)} >
                 <View style={styles.imgItem} key={data.id} >
@@ -71,7 +84,10 @@ class ArticleList extends Component
                         source={{uri:data.thumbnail_images.full.url}}
                         style={styles.imgItemThumb}/>
 
-                    <Text style={styles.imgItemTit} numberOfLines={28} >{data.title}</Text>
+					{tag}
+                    <View style={styles.imgItemTit} >
+						<Text style={styles.imgItemTxt} numberOfLines={20} >{data.title}</Text>
+					</View>
                 </View>
 				</TouchableOpacity>
             );
@@ -80,7 +96,7 @@ class ArticleList extends Component
             return (
 				<TouchableOpacity onPress={() => this.onPostButton(data.id)} >
                 <View style={styles.strItem} key={data.id}>
-                    <Text key={'post' + data.id} style={styles.strItemTit} numberOfLines={28}>{data.title}</Text>
+                    <Text key={'post' + data.id} style={styles.strItemTit} numberOfLines={20}>{data.title}</Text>
                 </View>
 				</TouchableOpacity>
             );
@@ -147,15 +163,35 @@ let styles = StyleSheet.create({
   	},
   	imgItemTit: {
       	position: 'absolute',
-      	color: '#fff',
-      	textAlign: 'center',
       	bottom: 20,
-      	left:15,
-  		right:15,
-      	fontSize: 18,
-      	fontWeight: "600",
-      	backgroundColor: 'transparent',
+      	left:0,
+		paddingLeft:15,
+		paddingRight:15,
   	},
+	imgItemTxt: {
+		fontSize: 17,
+		color: '#fff',
+      	textAlign: 'left',
+		fontWeight: "600",
+		textShadowOffset: {width: 1.5, height: 1},
+		textShadowRadius: 1,
+		textShadowColor: '#000000',
+	},
+	imgItemTag: {
+		position: 'absolute',
+      	bottom: 47,
+      	left:15,
+		backgroundColor: '#fff',
+		paddingLeft:5,
+		paddingRight:5,
+		paddingTop:3,
+		paddingBottom:3,
+	},
+	imgTagTxt: {
+		color: '#4A4A4A',
+		fontSize: 14,
+		textAlign: 'left',
+	},
   	strItem: {
       	borderStyle: 'solid',
       	borderBottomWidth: 0.3,
