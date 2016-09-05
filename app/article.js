@@ -12,6 +12,8 @@ import {
 	Image,
 	WebView,
 	TextInput,
+	AsyncStorage,
+	Alert,
 } from 'react-native';
 
 import { connect } from 'react-redux'
@@ -33,12 +35,17 @@ class Article extends Component
 		this.state = {
 	      	inputHeight: 0,
 			inputText: '',
+			isSubmit: false,
+
 	    };
+
+		this.user = null;
+		this.url = CONFIGS.ARTICLE_CONTENT_API + this.props.id;
   	}
 
 	componentDidMount()
     {
-
+		this.auth();
     }
 
 	// 已加载组件收到新的参数时调用
@@ -47,23 +54,94 @@ class Article extends Component
 		this.articleData = nextProps.article;
 	}
 
+	async auth()
+    {
+        // 查看用户是否已经登录
+        let user = await AsyncStorage.getItem('user');
+        if (user != null) {
+            this.user = JSON.parse(user);
+        }
+    }
+
+	// 提交评论
+	postComms()
+	{
+		// 不能重复提交
+		if (this.state.isSubmit) {
+			return;
+		}
+
+		if (this.user == null) {
+            Alert.alert(
+                "用户注册登录后才能发表评论",
+                null,
+                [{text: '确定'},]);
+
+            return;
+        }
+
+        if (this.state.inputText.length <= 0) {
+            Alert.alert(
+                "请填写评论内容",
+                null,
+                [{text: '确定'},]);
+
+            return;
+        }
+
+		//console.log(this.user);
+        this.setState({ isSubmit:true, });
+
+        let url = "http://112.124.18.75/api/user/post_comment/?insecure=cool&comment_status=1"
+              +"&post_id=" + this.props.id
+              +"&cookie="+ this.user.cookie
+              +"&content="+ this.state.inputText;
+
+        fetch(encodeURI(url))
+            .then((response) => response.json())
+            .then((data) => {
+                this.setState({ isSubmit:false, });
+				console.log(data);
+                if (data.status == 'ok') {
+                    Alert.alert(
+                        "评论成功",
+                        null,
+                        [{text: '确定'},]);
+
+					// 跳转刷新当前页面
+					this.props.navigator.push({
+			            name: 'articlePage',
+			            params: {id: this.props.id},
+			        });
+                } else {
+                    Alert.alert(
+                        "评论提交失败",
+                        null,
+                        [{text: '确定'},]);
+                }
+            })
+            .catch((error) => {
+                console.warn(error);
+                this.setState({ isSubmit:false, });
+            });
+	}
 
 	render ()
 	{
-		let url = CONFIGS.ARTICLE_CONTENT_API + this.props.id;
+		//let url = CONFIGS.ARTICLE_CONTENT_API + this.props.id;
 
 		return (
 			<View style={styles.container}>
 				<View style={styles.topnav}>
 					<TouchableOpacity style={styles.navleft} onPress={() => this.props.navigator.pop()} ><Icon name="arrow-left" size={24} color="#fff" /></TouchableOpacity>
 					<Text style={styles.navtit}></Text>
-					<TouchableOpacity style={styles.navright} onPress={() => this.props.navigator.push({name:'commentPage',params:{postId:this.props.id} })}><Icon name="search" size={24} color="#fff" /></TouchableOpacity>
+					<TouchableOpacity style={styles.navleft} onPress={() => this.props.navigator.pop()} ><Icon name="arrow-left" size={24} color="#fff" /></TouchableOpacity>
 				</View>
 
 				<WebView
                   automaticallyAdjustContentInsets={false}
                   style={{flex: 1}}
-                  source={{uri: url}}
+                  source={{uri: this.url}}
                   javaScriptEnabled={true}
                   domStorageEnabled={true}
                   decelerationRate="normal"
@@ -86,8 +164,8 @@ class Article extends Component
 						/>
 					</View>
 
-					<TouchableOpacity onPress={() => this.navigator.pop()} >
-						<Text style={{backgroundColor:'#dfdfdf',width:50, height:40,paddingTop:10,marginLeft:10,textAlign:'center',}}>发表</Text>
+					<TouchableOpacity onPress={() => this.postComms()} >
+						<Text style={{backgroundColor:'#292C35',color:'#fff',width:50, height:40,paddingTop:10,marginLeft:10,textAlign:'center',borderRadius:5,}}>发表</Text>
 					</TouchableOpacity>
 				</View>
 

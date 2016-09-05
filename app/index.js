@@ -19,6 +19,8 @@ import configureStore from './redux/store'
 import CategoryPage from "./category";
 import ArticlePage from "./article";
 import HomePage from "./home";
+import LoginPage from "./login";
+import RegisterPage from "./register";
 
 const store = configureStore();
 
@@ -89,6 +91,14 @@ class App extends Component
             return <ArticlePage {...route.params} {...this.props} navigator={navigator} />
         }
 
+		if (route.name == 'registerPage') {
+            return <RegisterPage {...route.params} navigator={navigator} />
+        }
+
+        if (route.name == 'loginPage') {
+            return <LoginPage {...route.params} navigator={navigator} />
+        }
+
 		/*
         // 启动图页
         if (route.name == 'startPage') {
@@ -103,14 +113,6 @@ class App extends Component
         // 内容详情页
         if (route.name == 'archivesPage') {
             return <ArchivesPage {...route.params} navigator={navigator} />
-        }
-
-        if (route.name == 'registerPage') {
-            return <RegisterPage {...route.params} navigator={navigator} />
-        }
-
-        if (route.name == 'loginPage') {
-            return <LoginPage {...route.params} navigator={navigator} />
         }
 
         if (route.name == 'commentPage') {

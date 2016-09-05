@@ -49,7 +49,7 @@ export default class Home extends Component
 				ref={c => this.drawer = c}
 			  	type="static"
 			  	content={<SideMenu navigator={this.props.navigator} closeDrawer={() => {this.drawer.close()}} />}
-			  	openDrawerOffset={100}
+			  	openDrawerOffset={(viewport) => viewport.width - 200}
 			  	styles={styles.drawer}
 			  	tweenHandler={Drawer.tweenPresets.parallax}
 				open={false}

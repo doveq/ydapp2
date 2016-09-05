@@ -71,7 +71,7 @@ class ArticleList extends Component
 		// 如果设置了特殊图片,则按图片显示
         if (data.thumbnail_images != null) {
 
-			let tag = '';
+			let tag = null;
 			if (this.isShowCaty && typeof(data.categories[0]) != 'undefined') {
 				tag = <View style={styles.imgItemTag} ><Text style={styles.imgTagTxt} >{data.categories[0].title}</Text></View>
 			}
