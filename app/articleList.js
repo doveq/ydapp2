@@ -45,7 +45,7 @@ class ArticleList extends Component
 
 	componentDidMount()
     {
-		// 获取分类文章列表
+		// 显示搜索
 		this.props.dispatch( Actions.getArticleList(this.url) );
     }
 

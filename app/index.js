@@ -21,6 +21,7 @@ import ArticlePage from "./article";
 import HomePage from "./home";
 import LoginPage from "./login";
 import RegisterPage from "./register";
+import SearchPage from "./search";
 
 const store = configureStore();
 
@@ -97,6 +98,10 @@ class App extends Component
 
         if (route.name == 'loginPage') {
             return <LoginPage {...route.params} navigator={navigator} />
+        }
+
+		if (route.name == 'searchPage') {
+            return <SearchPage {...route.params} navigator={navigator} />
         }
 
 		/*

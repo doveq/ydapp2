@@ -22,6 +22,7 @@ export function getArticleList(url, page = 1)
         dispatch({'type': TYPES.ARTICLE_LIST_DOING, 'url': url});
 
         let furl = url + '&page=' + page;
+		console.log(furl);
         fetch(furl)
             .then((response) => response.json())
             .then((data) => {
@@ -35,7 +36,8 @@ export function getArticleList(url, page = 1)
 
                 let posts = data.posts;
                 // 如果以前有数据则合并数据，加载更多时用到
-                if (typeof(state.articleList[url].data) != 'undefined') {
+                //if (typeof(state.articleList[url].data) != 'undefined') {
+				if (page > 1) {
                    	posts = state.articleList[url].data.concat(posts);
                 }
 

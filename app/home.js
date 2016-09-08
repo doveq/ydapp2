@@ -44,6 +44,13 @@ export default class Home extends Component
 
 	render ()
 	{
+		console.log(this.props.search);
+		let aurl = CONFIGS.HOME_LIST_API;
+		if (this.props.search) {
+			// 如果是搜索则调用显示搜索数据
+			aurl = CONFIGS.SEARCH_ARTICLE_API + this.props.search;
+		}
+
 		return (
 			<Drawer
 				ref={c => this.drawer = c}
@@ -59,10 +66,10 @@ export default class Home extends Component
 						<View style={styles.topnav}>
 							<TouchableOpacity style={styles.navleft} onPress={() => this.drawer.open(true)} ><Icon name="ellipsis-v" size={24} color="#fff" /></TouchableOpacity>
 							<Text style={styles.navtit}>能源评论</Text>
-							<TouchableOpacity style={styles.navright} onPress={() => this.navigator.push({name:'commentPage',params:{postId:this.props.id} })}><Icon name="search" size={24} color="#fff" /></TouchableOpacity>
+							<TouchableOpacity style={styles.navright} onPress={() => this.props.navigator.push({name:'searchPage'})}><Icon name="search" size={24} color="#fff" /></TouchableOpacity>
 						</View>
 
-						<ArticleList url={CONFIGS.HOME_LIST_API} navigator={this.props.navigator} isShowCaty={true} />
+						<ArticleList url={aurl} navigator={this.props.navigator} isShowCaty={true} />
 			        </View>
 
 			</Drawer>

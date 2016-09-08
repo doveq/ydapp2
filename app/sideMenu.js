@@ -123,13 +123,21 @@ export default class sideMenu extends Component
 					</TouchableOpacity>
 				</View>
 
+				<View style={styles.item} key={1} >
+					<TouchableOpacity  onPress={ () => this.props.navigator.push({name:'searchPage'}) } >
+					<Text style={styles.itemStr}>
+						<Icon name="ellipsis-h" size={18} color="#fff" />     搜索
+					</Text>
+					</TouchableOpacity>
+				</View>
+
 				<View style={{marginTop:20,}}></View>
 
 				{login}
 				{reg}
 				{uinfo}
 				{logout}
-				
+
 			</View>
 
 		);

@@ -21,3 +21,6 @@ export const  COMMENTS_LIST_API = 'http://112.124.18.75/wp-json/wp/v2/comments?_
 
 // 首页所有文章列表api地址
 export const  HOME_LIST_API = 'http://112.124.18.75/api/get_recent_posts/?exclude=content,excerpt,comments,attachments';
+
+// 搜索文章
+export const  SEARCH_ARTICLE_API = 'http://112.124.18.75/api/get_search_results/?exclude=content,excerpt,comments,attachments&search=';
